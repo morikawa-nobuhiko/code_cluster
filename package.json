@@ -1,0 +1,196 @@
+{
+  "name": "code-cluster",
+  "displayName": "CodeCluster",
+  "description": "クラスターに追加したファイルを一度に開く拡張機能です。",
+  "version": "0.0.3",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "codeClusterTreeView",
+          "name": "Code Cluster"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "File Grouping",
+        "properties": {
+          "fileGrouping.groups": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "files"
+              ]
+            },
+            "description": "List of file groups"
+          }
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "fileGrouping.addFileToGroup",
+        "title": "Add file to Group"
+      },
+      {
+        "command": "fileGrouping.openGroupFiles",
+        "title": "Open Group"
+      },
+      {
+        "command": "fileGrouping.createGroup",
+        "title": "Create Group"
+      },
+      {
+        "command": "fileGrouping.deleteGroup",
+        "title": "Delete Group"
+      },
+      {
+        "command": "fileGrouping.openGroupFilesView",
+        "title": "Open Group"
+      },
+      {
+        "command": "fileGrouping.createGroupView",
+        "title": "Create Group"
+      },
+      {
+        "command": "fileGrouping.deleteGroupView",
+        "title": "Delete Group"
+      },
+      {
+        "command": "fileGrouping.openFileView",
+        "title": "Open File"
+      },
+      {
+        "command": "fileGrouping.removeFileFromGroupView",
+        "title": "Remove File from Group"
+      },
+      {
+        "command": "fileGrouping.renameGroupView",
+        "title": "Rename Group"
+      },
+      {
+        "command": "fileGrouping.refreshGroupView",
+        "title": "Refresh Group"
+      }
+    ],
+    "menus": {
+      "editor/title/context": [
+        {
+          "command": "fileGrouping.openGroupFiles",
+          "group": "fileGrouping"
+        },
+        {
+          "command": "fileGrouping.createGroup",
+          "group": "fileGrouping"
+        },
+        {
+          "command": "fileGrouping.deleteGroup",
+          "group": "fileGrouping"
+        },
+        {
+          "command": "fileGrouping.addFileToGroup",
+          "group": "fileGrouping"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "fileGrouping.createGroup",
+          "group": "navigation"
+        },
+        {
+          "command": "fileGrouping.addFileToGroup",
+          "group": "navigation"
+        },
+        {
+          "command": "fileGrouping.openGroupFiles",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "fileGrouping.openGroupFilesView",
+          "when": "view == codeClusterTreeView && viewItem == groupItem",
+          "group": "1_modification"
+        },
+        {
+          "command": "fileGrouping.createGroupView",
+          "when": "view == codeClusterTreeView && viewItem == groupItem",
+          "group": "2_modification"
+        },
+        {
+          "command": "fileGrouping.renameGroupView",
+          "when": "view == codeClusterTreeView && viewItem == groupItem",
+          "group": "2_modification"
+        },
+        {
+          "command": "fileGrouping.refreshGroupView",
+          "when": "view == codeClusterTreeView && viewItem == groupItem",
+          "group": "2_modification"
+        },
+        {
+          "command": "fileGrouping.deleteGroupView",
+          "when": "view == codeClusterTreeView && viewItem == groupItem",
+          "group": "4_modification"
+        },
+        {
+          "command": "fileGrouping.openFileView",
+          "when": "view == codeClusterTreeView && viewItem == fileItem"
+        },
+        {
+          "command": "fileGrouping.removeFileFromGroupView",
+          "when": "view == codeClusterTreeView && viewItem == fileItem"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.77.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5",
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1",
+    "@vscode/test-electron": "^2.3.0"
+  }
+}
